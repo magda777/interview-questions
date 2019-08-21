@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace CDSPractical {
@@ -21,8 +22,20 @@ namespace CDSPractical {
         /// </summary>
         /// <param name="source">An enumerable containing words</param>
         /// <returns></returns>
-        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source) {
-            throw new NotImplementedException();
+        public IEnumerable<int> ExtractNumbers(IEnumerable<string> source)
+        {
+            List<int> numbers = new List<int>();
+            int number = 0;
+
+            foreach (string word in source)
+            {
+                if (int.TryParse(word, out number))
+                {
+                    numbers.Add(number);
+                }
+            }
+
+            return numbers;
         }
 
         /// <summary>
@@ -66,8 +79,22 @@ namespace CDSPractical {
         /// <param name="first">First list of words</param>
         /// <param name="second">Second list of words</param>
         /// <returns></returns>
-        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second) {
-            throw new NotImplementedException();
+        public string LongestCommonWord(IEnumerable<string> first, IEnumerable<string> second)
+        {
+            List<string> commonWords = new List<string>();
+            foreach(string word in first)
+            {
+                if (second.FirstOrDefault(secondWord => secondWord.ToUpper() == word.ToUpper()) != null)
+                {
+                    commonWords.Add(word);
+                }
+            }
+
+            if (commonWords.Count == 0)
+                return string.Empty;
+
+            int longestLength = commonWords.Max(word => word.Length);
+            return commonWords.First(word => word.Length == longestLength);
         }
 
         /// <summary>
@@ -82,8 +109,10 @@ namespace CDSPractical {
         /// </summary>
         /// <param name="km">distance in kilometers</param>
         /// <returns></returns>
-        public double DistanceInMiles(double km) {
-            throw new NotImplementedException();
+        public double DistanceInMiles(double km)
+        {
+            double kilometersPerMile = 1.6;
+            return km / kilometersPerMile;
         }
 
         /// <summary>
@@ -99,7 +128,8 @@ namespace CDSPractical {
         /// <param name="miles">distance in miles</param>
         /// <returns></returns>
         public double DistanceInKm(double miles) {
-            throw new NotImplementedException();
+            double kilometersPerMile = 1.6;
+            return miles * kilometersPerMile;
         }
 
         /// <summary>
@@ -120,8 +150,22 @@ namespace CDSPractical {
         /// </summary>
         /// <param name="word">The word to check</param>
         /// <returns></returns>
-        public bool IsPalindrome(string word) {
-            throw new NotImplementedException();
+        public bool IsPalindrome(string word)
+        {
+            int wordLength = word.Length;
+            if (wordLength % 2 == 1)
+            {
+                word = word.Remove(wordLength/2, 1);
+            }
+
+            string firstPart = word.Substring(0,wordLength / 2);
+            string secondPart = word.Substring(wordLength / 2);
+
+            var charrArray = secondPart.ToCharArray();
+            Array.Reverse(charrArray);
+            string secondPartReversed = new string(charrArray);
+
+            return firstPart == secondPartReversed;
         }
 
         /// <summary>

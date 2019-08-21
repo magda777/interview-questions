@@ -82,10 +82,14 @@ namespace CDSPracticalTests {
         [Fact]
         public void IsPalindrome() {
             var palindromes = new List<string> {
-                
+                "anna",
+                "bob",
+                "qwerewq"
             };
             var invalid = new List<string> {
-                
+                "asdf",
+                "qwerrewa",
+                "cdeedc3"
             };
 
             foreach (var word in palindromes) {
