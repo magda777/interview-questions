@@ -108,7 +108,9 @@ namespace CDSPracticalTests {
 
         [Fact]
         public void CanSort() {
-            throw new NotImplementedException();
+            int[] unsortedNumbers = new int[5] { 4, 10, 5, 6, 1 };
+
+            Assert.Equal(new int[5] { 1, 4, 5, 6, 10 }, instance.Sort(unsortedNumbers));
         }
 
         [Fact]

@@ -91,10 +91,60 @@ namespace CDSInterview
 
                     case 6:
                         Console.WriteLine("Enter on the same line, multiple words separated by space");
+                        var textToBeSuffled = Console.ReadLine();
+                        string[] wordsToBeSuffled = textToBeSuffled.Split(' ');
+
+                        var suffled = questions.Shuffle(wordsToBeSuffled);
+
+                        Console.WriteLine($"The suffled list is:");
+                        foreach (string word in suffled)
+                        {
+                            Console.Write($"{word} ");
+                        }
+                        break;
+
+                    case 7:
+                        Console.WriteLine("Enter on the same line, multiple numbers separated by space");
+                        var textNumbers = Console.ReadLine();
+                        string[] stringNumbers = textNumbers.Split(' ');
+                        List<int> unorderedNumbers = new List<int>();
+                        try
+                        {
+                            foreach(string textNumber in stringNumbers)
+                            {
+                                int number = int.Parse(textNumber);
+                                unorderedNumbers.Add(number);
+                            }
+
+                            Console.Write("The sorted numbers are: ");
+                            int[] sortedNumbers = questions.Sort(unorderedNumbers.ToArray());
+                            foreach (int sortedNumber in sortedNumbers)
+                            {
+                                Console.Write($"{sortedNumber} ");
+                            }
+                        }
+                        catch(Exception ex)
+                        {
+                            Console.WriteLine("Some values are not numbers");
+                        }
+                        break;
+                    case 8:
+                        Console.WriteLine($"Fibonacci Sum is: {questions.FibonacciSum()}");
+                        break;
+                    case 9:
+                        Console.WriteLine("The generated list is: ");
+                        
+                        foreach (int item in questions.GenerateList())
+                        {
+                            Console.Write($"{item} ");
+                        }
+                        break;
+                    case 10:
+                        Environment.Exit(0);
                         break;
 
                     default:
-                        Console.WriteLine($" {menuItem} is not a valid option.");
+                        Console.WriteLine($"{menuItem} is not a valid option.");
                         break;
                 }
             }
@@ -110,7 +160,11 @@ namespace CDSInterview
                 $"3. { nameof(Questions.DistanceInMiles)} \n" +
                 $"4. { nameof(Questions.DistanceInKm)} \n" +
                 $"5. { nameof(Questions.IsPalindrome)} \n" +
-                $"6. { nameof(Questions.Shuffle)} \n");
+                $"6. { nameof(Questions.Shuffle)} \n" +
+                $"7. { nameof(Questions.Sort)} \n" +
+                $"8. { nameof(Questions.FibonacciSum)} \n" +
+                $"9. { nameof(Questions.GenerateList)} \n" +
+                $"10. Exit \n");
         }
     }
 }

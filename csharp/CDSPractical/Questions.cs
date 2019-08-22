@@ -185,8 +185,22 @@ namespace CDSPractical {
         /// </summary>
         /// <param name="source"></param>
         /// <returns></returns>
-        public IEnumerable<object> Shuffle(IEnumerable<object> source) {
-            throw new NotImplementedException();
+        public IEnumerable<object> Shuffle(IEnumerable<object> source)
+        {
+            List<object> sourceList = source.ToList();
+
+            Random rand = new Random();
+            int sourceCount = source.Count();
+            for (int i = 0; i <= sourceCount - 2; i++)
+            {
+                int randomNumber = rand.Next(i+1, sourceCount);
+
+                object aux = sourceList[i];
+                sourceList[i] = sourceList[randomNumber];
+                sourceList[randomNumber] = aux;
+             }
+
+            return sourceList;
         }
 
         /// <summary>
@@ -198,7 +212,21 @@ namespace CDSPractical {
         /// <param name="source"></param>
         /// <returns></returns>
         public int[] Sort(int[] source) {
-            throw new NotImplementedException();
+            int sourceCount = source.Count();
+            for (int i =0; i<= sourceCount - 2; i++)
+            {
+                for (int j = i+1; j <= sourceCount - 1; j++)
+                {
+                    if (source[i] > source[j])
+                    {
+                        int aux = source[i];
+                        source[i] = source[j];
+                        source[j] = aux;
+                    }
+                }
+            }
+
+            return source;
         }    
 
         /// <summary>
@@ -212,7 +240,20 @@ namespace CDSPractical {
         /// </summary>
         /// <returns></returns>
         public int FibonacciSum() {
-            throw new NotImplementedException();
+            Int32 firstNumber = 1;
+            Int32 secondNumber = 2;
+            Int32 sum = 2;
+            while (secondNumber <= 4000000)
+            {
+                Int32 newNumber = firstNumber + secondNumber;
+                if (newNumber % 2 == 0)
+                {
+                    sum += newNumber;
+                }
+                firstNumber = secondNumber;
+                secondNumber = newNumber;
+            }
+            return sum;
         }
 
         /// <summary>
@@ -226,27 +267,37 @@ namespace CDSPractical {
             var numThreads = 2;
 
             Thread[] threads = new Thread[numThreads];
-            for (var i = 0; i < numThreads; i++) {
-                threads[i] = new Thread(() => {
+            for (var i = 0; i < numThreads; i++)
+            {
+                threads[i] = new Thread(() => 
+                {
                     var complete = false;
-                    while (!complete) {                        
+
+                    while (!complete)
+                    {                        
                         var next = ret.Count + 1;
-                        Thread.Sleep(new Random().Next(1, 10));
-                        if (next <= 100) {
+                        //Thread.Sleep(new Random().Next(1, 10));
+
+                        if (next <= 100)
+                        {
                             ret.Add(next);
                         }
 
-                        if (ret.Count >= 100) {
+                        if (ret.Count >= 100)
+                        {
                             complete = true;
                         }
+                        Thread.Sleep(new Random().Next(1, 10));
                     }                    
                 });
                 threads[i].Start();
             }
 
-            for (var i = 0; i < numThreads; i++) {
-                threads[i].Join();
-            }
+            //for (var i = 0; i < numThreads; i++)
+            //{
+            //    threads[i].Join();
+            //}
+            threads[numThreads - 1].Join();
 
             return ret;
         }
